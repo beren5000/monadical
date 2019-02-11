@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}
+    {% trans 'TicTacToe' %}
+{% endblock %}
+{% block style %}
+    <style>
+        .space {
+            width: 33%;
+            height: 33%;
+            overflow: auto;
+            display: block;
+            float: left;
+            font-size: 3rem;
+            text-align: center;
+            vertical-align: middle;
+            padding: 3%;
+        }
+
+        .game-area {
+            width: 300px;
+            height: 300px;
+        }
+
+        #one {
+            border-bottom: solid;
+            border-right: solid;
+        }
+
+        #two {
+            border-left: solid;
+            border-right: solid;
+            border-bottom: solid;
+        }
+
+        #three {
+            border-left: solid;
+            border-bottom: solid;
+        }
+
+        #four {
+            border-top: solid;
+            border-bottom: solid;
+            border-right: solid;
+        }
+
+        #five {
+            border: solid;
+        }
+
+        #six {
+            border-top: solid;
+            border-bottom: solid;
+            border-left: solid;
+        }
+
+        #seven {
+            border-top: solid;
+            border-right: solid;
+        }
+
+        #eight {
+            border-top: solid;
+            border-left: solid;
+            border-right: solid;
+        }
+
+        #nine {
+            border-top: solid;
+            border-left: solid;
+        }
+
+
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="game-area">
+                    <div id="one" class="space">
+
+                    </div>
+                    <div id="two" class="space">
+
+                    </div>
+                    <div id="three" class="space">
+
+                    </div>
+
+                    <div id="four" class="space">
+
+                    </div>
+                    <div id="five" class="space">
+
+                    </div>
+                    <div id="six" class="space">
+
+                    </div>
+
+                    <div id="seven" class="space">
+
+                    </div>
+                    <div id="eight" class="space">
+
+                    </div>
+                    <div id="nine" class="space">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var player = 'X';
+        var turns = 0;
+        var winner = null;
+
+        $('.space').on('click', function () {
+            turn(this.id)
+        });
+
+        var isEmpty = function (el) {
+            return !$.trim(el.html())
+        }
+
+        var turn = function (space_id) {
+            draw_symbol(player, space_id);
+            check_status(player);
+            if (player == 'X') {
+                player = 'O'
+            } else {
+                player = 'X'
+            }
+            if (winner) {
+                //$('.space').html('');
+                alert(winner);
+            }
+            turns = turns + 1;
+
+        }
+
+        var draw_symbol = function (simbol, space_id) {
+            var space = $('#' + space_id);
+            console.log(isEmpty(space));
+            if (isEmpty(space)) {
+                space.html(player);
+            }
+        }
+
+        var check_status = function (player) {
+            switch (true) {
+                case $('#one').html() === player && $('#two').html() === player && $('#three').html() === player:
+                    winner = player;
+                    break;
+                case $('#four').html() === player && $('#five').html() === player && $('#six').html() === player:
+                    winner = player;
+                    break;
+                case $('#seven').html() === player && $('#eight').html() === player && $('#nine').html() === player:
+                    winner = player;
+                    break;
+                case $('#one').html() === player && $('#four').html() === player && $('#seven').html() === player:
+                    winner = player;
+                    break;
+                case $('#two').html() === player && $('#five').html() === player && $('#eight').html() === player:
+                    winner = player;
+                    break;
+                case $('#three').html() === player && $('#six').html() === player && $('#nine').html() === player:
+                    winner = player;
+                    break;
+                case $('#one').html() === player && $('#five').html() === player && $('#nine').html() === player:
+                    winner = player;
+                    break;
+                case $('#three').html() === player && $('#five').html() === player && $('#seven').html() === player:
+                    winner = player;
+                    break;
+                default:
+                    break;
+            }
+            console.log(winner);
+        }
+
+
+    </script>
+{% endblock %}
